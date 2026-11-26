@@ -1,0 +1,76 @@
+# ==============================================================================
+# TransformersNative (Windows x64 PC Port) - .gitignore
+# ==============================================================================
+
+# --- Build & CMake Output Directories ---
+build/
+build-*/
+out/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+build.ninja
+.ninja_deps
+.ninja_log
+
+# --- Packaged / Compiled Binaries & Generated Recompiler Output ---
+dist/
+recomp_out/
+RecompiledModules/
+build_cache/
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.o
+*.obj
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.idb
+*.apk
+*.idsig
+*.keystore
+*.old
+
+# --- Copyrighted PS2 Game Images, Memory Cards, Configs, Logs & Captures ---
+*.iso
+*.bin
+*.cue
+*.mdf
+*.mds
+*.img
+*.mcd
+*.ps2
+MemoryCard0/
+mc0/
+*.ini
+*.log
+*.bmp
+*.png
+*.tmp
+*.bak
+
+# --- IDE / Editor / OS Artifacts ---
+.vs/
+.vscode/
+.idea/
+.cache/
+*.suo
+*.user
+*.sln
+*.vcxproj*
+compile_commands.json
+Thumbs.db
+.DS_Store
+
+# --- Android-Only Platform & Tooling (PC-only GitHub release) ---
+# Verified safe in CMakeLists.txt: Android targets are strictly gated inside if(ANDROID).
+Platform/Android/
+Graphics/OpenGLES/
+Tools/build_android_*.ps1
