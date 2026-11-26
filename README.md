@@ -86,6 +86,32 @@ User PS2 ISO (read-only)
 
 ---
 
+## System Requirements (Desktop PC & Laptop)
+
+Release builds target **`-march=x86-64-v3`** ([CMakeLists.txt](CMakeLists.txt#L11)), **Direct3D 11 (`Feature Level 11_0`+)**, **DXGI Flip-Model** (`DXGI_SWAP_EFFECT_FLIP_DISCARD`), and **High-Resolution Waitable Timers** (`CREATE_WAITABLE_TIMER_HIGH_RESOLUTION`).
+
+| Component | Minimum (Smooth 60 FPS @ 1×–2× HD) | Recommended (Locked 60 FPS @ 3×–4× HD & Fast Local Recompile) |
+| --- | --- | --- |
+| **OS** | Windows 10 64-bit (1803+) / Windows 11 64-bit | Windows 10 64-bit (21H2+) / Windows 11 64-bit |
+| **CPU (Instruction Set)** | `x86-64-v3` (AVX2 + FMA + BMI2; Intel 4th Gen Haswell+ / AMD Ryzen+) + SSE2 (`Vu1JitX64`) | `x86-64-v3` high-IPC multi-core CPU (6–14 cores) |
+| **Desktop CPU Examples** | Intel Core i3-10100 / AMD Ryzen 3 3100 (4C/8T+) | Intel Core i5-12400 / AMD Ryzen 5 5600+ |
+| **Laptop CPU Examples** | Intel Core i5-1035G1 / AMD Ryzen 5 4500U | Intel Core i5-12500H / **Core i7-13650HX** *(verified 3× HD reference)* / AMD Ryzen 5 6600H+ |
+| **GPU (Desktop)** | Direct3D 11 (`FL 11_0`+, WDDM 2.0+): Intel UHD 630, AMD Radeon Vega iGPU, or NVIDIA GT 1030 (1 GB+ VRAM) | NVIDIA GTX 1060 / AMD RX 570 or better (2–4 GB+ VRAM for 3×–4× HD) |
+| **GPU (Laptop)** | Intel Iris Xe / UHD, AMD Radeon Vega iGPU, or NVIDIA MX250 (1 GB+ VRAM) | NVIDIA GTX 1650 Laptop / RTX 2060+ or AMD Radeon 680M / 780M+ (2–4 GB+ VRAM) |
+| **RAM** | 8 GB (dual-channel recommended on laptop iGPUs) | 16 GB (recommended for parallel Ninja compilation of the 33-shard `SLUS_216.02_recomp.dll`) |
+| **Storage** | ~3.5 GB free space (user PS2 ISO ~2.5 GB + local build/recomp cache) | ~3.5 GB+ on NVMe/SATA SSD (for fast ISO streaming and ~32s initial load) |
+| **Display & Input** | Any 60 Hz+ display; Keyboard or XInput gamepad | 60 Hz+ or VRR / FreeSync / G-Sync display (`ALLOW_TEARING`); XInput gamepad + Keyboard |
+
+> **Pre-AVX2 CPUs**: Older CPUs lacking `x86-64-v3` (AVX2/FMA/BMI2) must rebuild from source after removing `-march=x86-64-v3` in [CMakeLists.txt](CMakeLists.txt#L11).
+
+### Laptop & Low-End Tuning Tips
+- **Resolution Scale**: Set `internal_resolution_scale=1` (native PS2 `640×448`) or `2` (`2× HD`) in Settings (`%LOCALAPPDATA%\TransformersNative\settings.ini`) on integrated GPUs.
+- **Lowest Input Latency**: Disable VSync (`vsync=0`) to enable `0ms Immediate` DXGI tearing presentation (`DXGI_PRESENT_ALLOW_TEARING`).
+- **Laptop Power & Thermals**: Keep the laptop plugged in on the **High Performance** / **Best Performance** power plan so boost clocks stay steady for `Vu1JitX64` and `D3D11GsRenderer`.
+- **Memory & CPU Headroom**: Close background VMs, heavy browsers, or other emulators—especially before running a parallel Ninja DLL recompile.
+
+---
+
 ## Quick Start (Windows x64)
 
 ### Prerequisites
