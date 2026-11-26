@@ -6,6 +6,50 @@ A native Windows x64 static recompiler and PlayStation 2 hardware-compatibility 
 
 ---
 
+## Screenshots (3× HD Direct3D 11 Hardware GS)
+
+Captured directly from `Transformers.exe` running *Transformers: The Game (USA)* (`SLUS_216.02`) at **3× HD (`1536×1344`)** via `D3D11GsRenderer`:
+
+| Live Bumblebee Gameplay (*The Suburbs*, HUD & Minimap) |
+| :---: |
+| ![Bumblebee Gameplay in The Suburbs at 3x HD](docs/screenshots/suburbs_gameplay.jpg) |
+
+| Title Screen (117+ FPS @ 3× HD) | AllSpark Menu (66–68 FPS @ 3× HD) |
+| :---: | :---: |
+| ![Title Screen at 3x HD](docs/screenshots/title_screen.jpg) | ![AllSpark Menu at 3x HD](docs/screenshots/allspark_menu.jpg) |
+
+| *The Suburbs* Intro (GPU `PSMZ16 → PSMT8H` Depth Fog) | Paused Menu Overlay (50–64 FPS @ 3× HD) |
+| :---: | :---: |
+| ![The Suburbs Intro at 3x HD](docs/screenshots/suburbs_intro.jpg) | ![Paused Menu Overlay at 3x HD](docs/screenshots/suburbs_paused.jpg) |
+
+---
+
+## PS2 → PC Port Progress
+
+Overall weighted completion across all 40 audited subsystems: **89.7% (`89.71%`, 1,569 / 1,749 items)** — unweighted subsystem card average: **83.12%**.
+
+![PS2 to PC Port Progress](docs/progress/port_progress.svg)
+
+### Detailed Coverage & Honest Remaining Gaps
+
+- **EE R5900 & Recompiler Coverage**: **`88.99%` (`299 / 336`)** — `7,610 / 7,610` (`100.00%`) `SLUS_216.02` ELF functions discovered & emitted (`901,040 / 901,040` R5900 instructions decoded, `0` unknown).
+- **GS Hardware + VU1 ISA Coverage**: **`85.41%` (`357 / 418`)** — `128 / 128` (`100.0%`) VU1 interpreted ISA ops + `5 / 5` pipeline hazards; `119 / 164` (`72.6%`) VU1 x64 JIT native ops (remaining `38 / 70` lower ops run via JIT C++ fallback so all 28 `.vutext` programs execute in JIT blocks).
+
+| Subsystem Area | Progress | Done / Total | Status & Honest Notes |
+| --- | ---: | ---: | --- |
+| **ISO9660 / ELF / GuestMemory / DMAC SPR** | `100.0%` | `30 / 30` | Complete (`ISO9660 8/8`, `ELF 7/7`, `GuestMemory 10/10`, `DMAC SPR 5/5`) |
+| **R5900 Decoder, CodeGen & MMI (`Recompiler`)** | `96.1%` | `599 / 623` | `Decoder 268/268 (100.0%)`, `CodeGen 256/268 (95.5%)`, `MMI / SIMD 75/87 (86.2%)` |
+| **R5900 Fallback Interpreter & EE Core** | `84.1%` | `306 / 364` | `Interp 241/268 (89.9%)`, `Syscalls 55/80 (68.8%)`, `Threads 8/10 (80.0%)`, `Timers 2/6 (33.3% — stubs, no IRQ)` |
+| **COP0 / COP1 FPU / VU0 Macro & Micro** | `93.0%` | `132 / 142` | `COP0/1 59/59 (100.0%)`, `VU0 Macro 71/75 (94.7%)`, `VU0 Micro 2/8 (25.0% — mem mapped, no micro runner)` |
+| **VU1 Interpreter, EFU & x64 JIT** | `85.3%` | `262 / 307` | `VU1 Interp 128/128 (100.0%)`, `EFU 15/15 (100.0%)`, `x64 JIT 119/164 (72.6%)` |
+| **GIF / GS / D3D11 HW GS / Depth Fog** | `85.7%` | `96 / 112` | `GIF 8/9 (88.9%)`, `GS Regs 48/58 (82.8%)`, `VRAM 14/15 (93.3%)`, `CLUT/Tex 11/12 (91.7%)`, `D3D11 HW 11/14 (78.6% — no AA1/DTHE/FGE)`, `Depth Fog 4/4 (100.0%)` |
+| **DXGI Flip-Model / Input / VMC / CDVD / UI** | `100.0%` | `45 / 45` | `Flip-Model 9/9`, `JIT Input 5/5`, `DS2 6/6`, `XInput 5/5`, `CDVD 6/6`, `MemoryCard 6/6`, `Desktop UI 8/8` |
+| **IOP HLE / NuSound3M / SPU2 / Host Audio** | `62.9%` | `22 / 35` | `IOP HLE 13/16 (81.3%)`, `NuSound3M 5/8 (62.5%)`, `SPU2 Mixer 4/7 (57.1%)`, `Host Audio 0/4 (0.0% — no WASAPI/waveOut PCM sink yet)` |
+| **IPU / FMV Video (`MOVIES.DAT`)** | `0.0%` | `0 / 8` | DMAC IDs present; no MPEG-2 / IPU bitstream decoder yet |
+| **DMAC Core / VIF0-1 / Builder / Tests / Flow** | `92.8%` | `77 / 83` | `DMAC 9/11 (81.8%)`, `VIF0/1 17/19 (89.5%)`, `Builder 6/6 (100.0%)`, `Unit Tests 40/40 (100.0%)`, `Playable Flow 5/7 (71.4%)` |
+
+---
+
 ## Verified PC Features & Architecture
 
 ```

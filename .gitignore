@@ -53,6 +53,9 @@ mc0/
 *.log
 *.bmp
 *.png
+!docs/screenshots/*.png
+!docs/screenshots/*.jpg
+!docs/progress/*.svg
 *.tmp
 *.bak
 
